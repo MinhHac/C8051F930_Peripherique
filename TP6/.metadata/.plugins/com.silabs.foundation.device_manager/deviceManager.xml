@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<deviceManager>
+  <devices>
+    <device id="com.silabs.studio.tcf.adapters@usb.EC3004BC5C3.adapter">
+      <properties>
+        <property key="CoreDeviceTokens.LABEL" value="java.lang.String:C8051F930 (EC3004BC5C3)"/>
+        <property key="AdapterDeviceTokens.ADAPTER_NAME" value="java.lang.String:adapter"/>
+        <property key="UsbDeviceTokens.USB_PID" value="java.lang.Integer:32836"/>
+        <property key="UsbDeviceTokens.USB_MANUFACTURER" value="java.lang.String:Silicon Laboratories"/>
+        <property key="UsbDeviceTokens.IS_USB" value="java.lang.Boolean:true"/>
+        <property key="TCFDeviceTokens.ADAPTER_ID" value="java.lang.String:usb.EC3004BC5C3.adapter"/>
+        <property key="HardwareDeviceTokens.MCU_LABEL" value="java.lang.String:C8051F930"/>
+        <property key="CoreDeviceTokens.IS_LOCAL" value="java.lang.Boolean:true"/>
+        <property key="TCFDeviceTokens.CONNECTION_ID" value="java.lang.String:usb.EC3004BC5C3"/>
+        <property key="UsbDeviceTokens.USB_PRODUCT_NAME" value="java.lang.String:USB Debug Adapter"/>
+        <property key="CoreDeviceTokens.TYPE" value="com.silabs.foundation.device.properties.types.CoreDeviceTypes:DEBUG_ADAPTER"/>
+        <property key="UsbDeviceTokens.USB_RELEASE_NUMBER" value="java.lang.Integer:256"/>
+        <property key="AdapterDeviceTokens.ADAPTER_TYPE" value="com.silabs.foundation.device.properties.types.CoreAdapterTypes:SILABS_EC3"/>
+        <property key="AdapterDeviceTokens.ADAPTER_SERIAL_NUMBER" value="java.lang.String:EC3004BC5C3"/>
+        <property key="UsbDeviceTokens.USB_VID" value="java.lang.Integer:4292"/>
+        <property key="TCFDeviceTokens.MCU_ID" value="java.lang.String:usb.EC3004BC5C3.adapter.mcu"/>
+        <property key="HardwareDeviceTokens.MCU_ID" value="java.lang.String:C8051F930"/>
+        <property key="TCFDeviceTokens.TRANSPORT_ID" value="java.lang.String:usb"/>
+        <property key="HardwareDeviceTokens.MCU_ARCHITECTURE" value="com.silabs.foundation.device.properties.types.CoreArchitectureTypes:SILABS_8051"/>
+        <property key="UsbDeviceTokens.USB_SERIAL_NUMBER" value="java.lang.String:EC3004BC5C3"/>
+      </properties>
+    </device>
+    <device id="com.silabs.studio.tcf.serialPorts@serial.serial.COM1">
+      <properties>
+        <property key="CoreDeviceTokens.LABEL" value="java.lang.String:Unnamed"/>
+        <property key="TCFDeviceTokens.SERIAL_PORT_ID" value="java.lang.String:serial.serial.COM1"/>
+        <property key="SerialDeviceTokens.PORT_PATH" value="java.lang.String:COM1"/>
+        <property key="CoreDeviceTokens.IS_LOCAL" value="java.lang.Boolean:true"/>
+        <property key="TCFDeviceTokens.CONNECTION_ID" value="java.lang.String:serial.serial"/>
+        <property key="TCFDeviceTokens.TRANSPORT_ID" value="java.lang.String:serial"/>
+        <property key="CoreDeviceTokens.TYPE" value="com.silabs.foundation.device.properties.types.CoreDeviceTypes:SERIAL_PORT"/>
+        <property key="SerialDeviceTokens.PORT_NAME" value="java.lang.String:COM1"/>
+        <property key="SerialDeviceTokens.PORT_DEVICES" value="java.lang.String:"/>
+      </properties>
+    </device>
+    <device id="com.silabs.studio.tcf.serialPorts@serial.serial.COM3">
+      <properties>
+        <property key="CoreDeviceTokens.LABEL" value="java.lang.String:Unnamed"/>
+        <property key="TCFDeviceTokens.SERIAL_PORT_ID" value="java.lang.String:serial.serial.COM3"/>
+        <property key="SerialDeviceTokens.PORT_PATH" value="java.lang.String:COM3"/>
+        <property key="CoreDeviceTokens.IS_LOCAL" value="java.lang.Boolean:true"/>
+        <property key="TCFDeviceTokens.CONNECTION_ID" value="java.lang.String:serial.serial"/>
+        <property key="TCFDeviceTokens.TRANSPORT_ID" value="java.lang.String:serial"/>
+        <property key="CoreDeviceTokens.TYPE" value="com.silabs.foundation.device.properties.types.CoreDeviceTypes:SERIAL_PORT"/>
+        <property key="SerialDeviceTokens.PORT_NAME" value="java.lang.String:COM3"/>
+        <property key="SerialDeviceTokens.PORT_DEVICES" value="java.lang.String:"/>
+      </properties>
+    </device>
+  </devices>
+  <groups/>
+</deviceManager>

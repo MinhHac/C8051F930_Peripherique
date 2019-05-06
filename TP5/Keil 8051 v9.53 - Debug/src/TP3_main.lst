@@ -1,0 +1,150 @@
+C51 COMPILER V9.53.0.0   TP3_MAIN                                                          03/18/2019 14:54:06 PAGE 1   
+
+
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE TP3_MAIN
+OBJECT MODULE PLACED IN .\src\TP3_main.OBJ
+COMPILER INVOKED BY: c:\SiliconLabs\SimplicityStudio\v3\developer\toolchains\keil_8051\9.53\BIN\C51.exe \\calebasse\2160
+                    -9785\Bureau\TP Micro S2\MCU8bits_RepEtudiants\HO_TASEVSKI\TP3\src\TP3_main.c OMF2 SMALL DEBUG OBJECTEXTEND ROM(LARGE) WA
+                    -RNINGLEVEL(2) FLOATFUZZY(3) OPTIMIZE(8,SPEED) DEFINE(DEBUG=1) INTVECTOR(0X0000) INTPROMOTE INCDIR(//calebasse/21609785/B
+                    -ureau/TP Micro S2/MCU8bits_RepEtudiants/HO_TASEVSKI/TP3/inc;C:/SiliconLabs/SimplicityStudio/v3/developer/sdks/si8051/v3/
+                    -/Device/shared/si8051Base;C:/SiliconLabs/SimplicityStudio/v3/developer/sdks/si8051/v3//Device/C8051F930;C:/SiliconLabs/S
+                    -implicityStudio/v3/developer/sdks/si8051/v3//Device/C8051F930/inc) PRINT(.\src\TP3_main.lst) COND PAGEWIDTH(120) PAGELEN
+                    -GTH(65) OBJECT(.\src\TP3_main.OBJ)
+
+line level    source
+
+   1          
+   2          //-----------------------------------------------------------------------------
+   3          // Includes
+   4          //-----------------------------------------------------------------------------
+   5          #include <SI_C8051F930_Register_Enums.h>                  // SFR declarations
+   6          #include "InitDevice.h"
+   7          // $[Generated Includes]
+   8          
+   9          #include "variables_globales.h"
+  10          #include "pin_test.h"
+  11          #include "time.h"
+  12          
+  13          #include "clavier.h"
+  14          
+  15          
+  16          
+  17          // [Generated Includes]$
+  18          
+  19          //-----------------------------------------------------------------------------
+  20          // Prototypes de fonctions
+  21          //-----------------------------------------------------------------------------
+  22          void scheduler(void);
+  23          //-----------------------------------------------------------------------------
+  24          // Wrapper
+  25          //-----------------------------------------------------------------------------
+  26          
+  27          //-----------------------------------------------------------------------------
+  28          
+  29          //-----------------------------------------------------------------------------
+  30          // main() Routine
+  31          // ----------------------------------------------------------------------------
+  32          int main (void){
+  33   1              if((RSTSRC&0x02)==0x00){
+  34   2                      if((RSTSRC&0x08)==0x08)
+  35   2                         NOP();
+  36   2              }
+  37   1              // Call hardware initialization routine
+  38   1              enter_DefaultMode_from_RESET();
+  39   1              PCA0CPH5=0;
+  40   1      
+  41   1              IE_EA=1;
+  42   1      
+  43   1              while (1) 
+  44   1         {
+  45   2              while(new_task==0);
+  46   2              new_task=0;
+  47   2              scheduler();
+  48   2         }
+  49   1      }
+  50          
+C51 COMPILER V9.53.0.0   TP3_MAIN                                                          03/18/2019 14:54:06 PAGE 2   
+
+  51          char getchar(void){
+  52   1              return(get_touche());
+  53   1      }
+  54          
+  55          void scheduler(void){
+  56   1      
+  57   1          uint8_t key;
+  58   1          static uint8_t key_memoire = 0, etat_key = 0;
+  59   1      
+  60   1              static unsigned int nb_appels=0;            // declaration la variable de i qui compte pour 200 fois dela
+             -y
+  61   1              static unsigned int i;                      // declaration la variable de i qui compte pour 200 fois dela
+             -y
+  62   1              PCA0CPH5=0;                                 //
+  63   1              switch(scheduler_ct) {
+  64   2                  case 0: {
+  65   3      // etap 1
+  66   3                      //TEST=!TEST;                       // pour mesurer sur oscilloscope
+  67   3                      key = getchar();                    // fonction getchar()
+  68   3                      //TEST=!TEST;                       // pour mesurer sur oscilloscope
+  69   3                      //NOP();
+  70   3      // etap 2
+  71   3                      if(key==0 && etat_key!=0){
+  72   4                              key_memoire=etat_key;
+  73   4                          etat_key=0;
+  74   4                      }else if(key!=0){
+  75   4                              etat_key=key;
+  76   4                      }
+  77   3                      if(key_memoire != 0){
+  78   4                              //TEST=!TEST;
+  79   4                              key_memoire = 0;
+  80   4                              //NOP();
+  81   4                      }
+  82   3                      break;
+  83   3                  }
+  84   2      
+  85   2                      case 7: {
+  86   3                              /*
+  87   3                              nb_appels++;                        // incremente nb_appels a chaque fois de case 7
+  88   3                              if(nb_appels==50){
+  89   3                                      for(i=0;i<100;i++) delay(120);  //fonction delay pour 1 microseconde, pour 12 ms = 100*120 us
+  90   3                              }
+  91   3      
+  92   3                              break;*/
+  93   3                      }
+  94   2      
+  95   2              }
+  96   1      
+  97   1              scheduler_ct++;
+  98   1              if(scheduler_ct==10) scheduler_ct=0;
+  99   1      
+ 100   1      }
+*** WARNING C280 IN LINE 60 OF \\calebasse\21609785\Bureau\TP Micro S2\MCU8bits_RepEtudiants\HO_TASEVSKI\TP3\src\TP3_mai
+             -n.c: 'nb_appels': unreferenced local variable
+*** WARNING C280 IN LINE 61 OF \\calebasse\21609785\Bureau\TP Micro S2\MCU8bits_RepEtudiants\HO_TASEVSKI\TP3\src\TP3_mai
+             -n.c: 'i': unreferenced local variable
+ 101          
+ 102          INTERRUPT(TIMER3_ISR,TIMER3_IRQn) {                     // Timer 3 base de temps de 10ms
+ 103   1              TMR3CN&=~0x80;
+ 104   1              new_task=1;
+ 105   1              //TEST=!TEST;
+ 106   1      }
+ 107          
+C51 COMPILER V9.53.0.0   TP3_MAIN                                                          03/18/2019 14:54:06 PAGE 3   
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     93    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,220 @@
+C51 COMPILER V9.53.0.0   TP5_MAIN                                                          04/29/2019 13:12:48 PAGE 1   
+
+
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE TP5_MAIN
+OBJECT MODULE PLACED IN .\src\TP5_main.OBJ
+COMPILER INVOKED BY: c:\SiliconLabs\SimplicityStudio\v3\developer\toolchains\keil_8051\9.53\BIN\C51.exe \\calebasse\2160
+                    -9785\Bureau\TP Micro S2\MCU8bits_RepEtudiants\HO_TASEVSKI\TP5\src\TP5_main.c OMF2 SMALL DEBUG OBJECTEXTEND ROM(LARGE) WA
+                    -RNINGLEVEL(2) FLOATFUZZY(3) OPTIMIZE(8,SPEED) DEFINE(DEBUG=1) INTVECTOR(0X0000) INTPROMOTE INCDIR(//calebasse/21609785/B
+                    -ureau/TP Micro S2/MCU8bits_RepEtudiants/HO_TASEVSKI/TP5/inc;C:/SiliconLabs/SimplicityStudio/v3/developer/sdks/si8051/v3/
+                    -/Device/shared/si8051Base;C:/SiliconLabs/SimplicityStudio/v3/developer/sdks/si8051/v3//Device/C8051F930;C:/SiliconLabs/S
+                    -implicityStudio/v3/developer/sdks/si8051/v3//Device/C8051F930/inc) PRINT(.\src\TP5_main.lst) COND PAGEWIDTH(120) PAGELEN
+                    -GTH(65) OBJECT(.\src\TP5_main.OBJ)
+
+line level    source
+
+   1          
+   2          //-----------------------------------------------------------------------------
+   3          // Includes
+   4          //-----------------------------------------------------------------------------
+   5          #include <SI_C8051F930_Register_Enums.h>                  // SFR declarations
+   6          #include "InitDevice.h"
+   7          #include "LCD.h"
+   8          #include "LCD_port.h"
+   9          
+  10          // $[Generated Includes]
+  11          
+  12          #include "variables_globales.h"
+  13          #include "pin_test.h"
+  14          #include "time.h"
+  15          #include "stdio.h"
+  16          
+  17          #include "clavier.h"
+  18          #include "ibutton.h"
+  19          
+  20          
+  21          
+  22          // [Generated Includes]$
+  23          
+  24          //-----------------------------------------------------------------------------
+  25          // Prototypes de fonctions
+  26          //-----------------------------------------------------------------------------
+  27          void scheduler(void);
+  28          
+  29          //-----------------------------------------------------------------------------
+  30          // Wrapper
+  31          //-----------------------------------------------------------------------------
+  32          char getchar(void){
+  33   1              return(get_touche());
+  34   1      }
+  35          char putchar(char c){
+  36   1              return(putC_LCD(c));
+  37   1      }
+  38          
+  39          //-----------------------------------------------------------------------------
+  40          
+  41          //-----------------------------------------------------------------------------
+  42          // main() Routine
+  43          // ----------------------------------------------------------------------------
+  44          int main (void){
+  45   1              if((RSTSRC&0x02)==0x00){
+  46   2                      if((RSTSRC&0x08)==0x08)
+  47   2                         NOP();
+  48   2              }
+  49   1              // Call hardware initialization routine
+  50   1              enter_DefaultMode_from_RESET();
+C51 COMPILER V9.53.0.0   TP5_MAIN                                                          04/29/2019 13:12:48 PAGE 2   
+
+  51   1              /*while(1){
+  52   1                      reset_IBUTTON();
+  53   1                      delay(250);
+  54   1              }*/
+  55   1              PCA0CPH5=0;
+  56   1      
+  57   1              IE_EA=1;
+  58   1      
+  59   1              while (1) 
+  60   1         {
+  61   2              while(new_task==0);
+  62   2              new_task=0;
+  63   2              scheduler();
+  64   2         }
+  65   1      }
+  66          
+  67          void scheduler(void){
+  68   1      
+  69   1      
+  70   1          uint8_t key , table_ID[8];
+  71   1      
+  72   1          static uint8_t key_memoire = 0, etat_key = 0, compteur=0;  //
+  73   1      
+  74   1          static bit flag_affi_init,flag_affi_1,flag_affi_2, flag_allume, flag_init;
+  75   1      
+  76   1      
+  77   1      
+  78   1              PCA0CPH5=0;                                 //
+  79   1              switch(scheduler_ct) {
+  80   2                  case 0: {
+  81   3                      //TEST=!TEST;                       // pour mesurer sur oscilloscope
+  82   3                      key = getchar();                    // fonction getchar()
+  83   3                      //TEST=!TEST;                       // pour mesurer sur oscilloscope
+  84   3                      //NOP();
+  85   3      
+  86   3                      if(key==0 && etat_key!=0){
+  87   4                              key_memoire=etat_key;
+  88   4                          etat_key=0;
+  89   4                      }else if(key!=0){
+  90   4                              etat_key=key;
+  91   4                      }
+  92   3      
+  93   3      
+  94   3      
+  95   3                      if(key_memoire != 0){
+  96   4                              //TEST=!TEST;
+  97   4      
+  98   4                              if(key_memoire=='*'){
+  99   5                                  key_memoire=0;
+ 100   5                                  flag_affi_1=1;
+ 101   5                              }
+ 102   4                              if(key_memoire=='#'){
+ 103   5      
+ 104   5                                      key_memoire=0;
+ 105   5                                      flag_affi_2=1;
+ 106   5      
+ 107   5                              }
+ 108   4      
+ 109   4                              key_memoire = 0;
+ 110   4                              //NOP();
+ 111   4                      }
+ 112   3                      break;
+ 113   3                  }
+C51 COMPILER V9.53.0.0   TP5_MAIN                                                          04/29/2019 13:12:48 PAGE 3   
+
+ 114   2      
+ 115   2                  case 1:{
+ 116   3                              if(!flag_allume){
+ 117   4                                      poweron_LCD();
+ 118   4                                      flag_allume = 1;
+ 119   4                              }else if(!flag_init) {
+ 120   4                                      init_LCD();
+ 121   4                                      flag_init = 1;
+ 122   4                              }
+ 123   3      
+ 124   3                      else {
+ 125   4                              if(flag_affi_1 == 1){                               //affichage de message
+ 126   5                                      flag_affi_1 = 0;
+ 127   5      
+ 128   5                                      //putchar('0');
+ 129   5                                      //TEST=!TEST;
+ 130   5                                      printf("\r0123456789ABCDEF");
+ 131   5                                      printf("\n0123456789ABCDEF");
+ 132   5                                      //TEST=!TEST;
+ 133   5                              }
+ 134   4                              if(flag_affi_2 == 1){                               //affichage de message
+ 135   5                                      flag_affi_2 = 0;
+ 136   5                                      clrscr_LCD();
+ 137   5                        }
+ 138   4                      }
+ 139   3                      break;
+ 140   3                  }
+ 141   2                  case 3: {
+ 142   3                              compteur ++;
+ 143   3                              printf("\r %d : %d",compteur*100);
+ 144   3      
+ 145   3                                      break;
+ 146   3                              }
+ 147   2      
+ 148   2      
+ 149   2                      case 7: {
+ 150   3                              /*
+ 151   3                              nb_appels++;                        // incremente nb_appels a chaque fois de case 7
+ 152   3                              if(nb_appels==50){
+ 153   3                                      for(i=0;i<100;i++) delay(120);  //fonction delay pour 1 microseconde, pour 12 ms = 100*120 us
+ 154   3                              }*/
+ 155   3                              break;
+ 156   3                      }
+ 157   2      
+ 158   2                      case 9: {
+ 159   3      
+ 160   3                              TEST = 0;
+ 161   3                              lecture_ID(table_ID);
+ 162   3                              TEST = 1;
+ 163   3                              NOP();
+ 164   3                              break;
+ 165   3      
+ 166   3                      }
+ 167   2      
+ 168   2              }
+ 169   1              scheduler_ct++;
+ 170   1              if(scheduler_ct==10) scheduler_ct=0;
+ 171   1      
+ 172   1      }
+*** WARNING C280 IN LINE 74 OF \\calebasse\21609785\Bureau\TP Micro S2\MCU8bits_RepEtudiants\HO_TASEVSKI\TP5\src\TP5_mai
+             -n.c: 'flag_affi_init': unreferenced local variable
+ 173          
+ 174          INTERRUPT(TIMER3_ISR,TIMER3_IRQn) {                     // Timer 3 base de temps de 10ms
+C51 COMPILER V9.53.0.0   TP5_MAIN                                                          04/29/2019 13:12:48 PAGE 4   
+
+ 175   1              TMR3CN&=~0x80;
+ 176   1              new_task=1;
+ 177   1              //TEST=!TEST;
+ 178   1      }
+ 179          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    224    ----
+   CONSTANT SIZE    =     46    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3       8
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      5    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

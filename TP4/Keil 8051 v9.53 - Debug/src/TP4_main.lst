@@ -1,0 +1,191 @@
+C51 COMPILER V9.53.0.0   TP4_MAIN                                                          03/25/2019 15:35:28 PAGE 1   
+
+
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE TP4_MAIN
+OBJECT MODULE PLACED IN .\src\TP4_main.OBJ
+COMPILER INVOKED BY: c:\SiliconLabs\SimplicityStudio\v3\developer\toolchains\keil_8051\9.53\BIN\C51.exe \\calebasse\2160
+                    -9785\Bureau\TP Micro S2\MCU8bits_RepEtudiants\HO_TASEVSKI\TP4\src\TP4_main.c OMF2 SMALL DEBUG OBJECTEXTEND ROM(LARGE) WA
+                    -RNINGLEVEL(2) FLOATFUZZY(3) OPTIMIZE(8,SPEED) DEFINE(DEBUG=1) INTVECTOR(0X0000) INTPROMOTE INCDIR(//calebasse/21609785/B
+                    -ureau/TP Micro S2/MCU8bits_RepEtudiants/HO_TASEVSKI/TP4/inc;C:/SiliconLabs/SimplicityStudio/v3/developer/sdks/si8051/v3/
+                    -/Device/shared/si8051Base;C:/SiliconLabs/SimplicityStudio/v3/developer/sdks/si8051/v3//Device/C8051F930;C:/SiliconLabs/S
+                    -implicityStudio/v3/developer/sdks/si8051/v3//Device/C8051F930/inc) PRINT(.\src\TP4_main.lst) COND PAGEWIDTH(120) PAGELEN
+                    -GTH(65) OBJECT(.\src\TP4_main.OBJ)
+
+line level    source
+
+   1          
+   2          //-----------------------------------------------------------------------------
+   3          // Includes
+   4          //-----------------------------------------------------------------------------
+   5          #include <SI_C8051F930_Register_Enums.h>                  // SFR declarations
+   6          #include "InitDevice.h"
+   7          #include "LCD.h"
+   8          #include "LCD_port.h"
+   9          
+  10          // $[Generated Includes]
+  11          
+  12          #include "variables_globales.h"
+  13          #include "pin_test.h"
+  14          #include "time.h"
+  15          #include "stdio.h"
+  16          
+  17          #include "clavier.h"
+  18          
+  19          
+  20          
+  21          // [Generated Includes]$
+  22          
+  23          //-----------------------------------------------------------------------------
+  24          // Prototypes de fonctions
+  25          //-----------------------------------------------------------------------------
+  26          void scheduler(void);
+  27          
+  28          //-----------------------------------------------------------------------------
+  29          // Wrapper
+  30          //-----------------------------------------------------------------------------
+  31          char getchar(void){
+  32   1              return(get_touche());
+  33   1      }
+  34          char putchar(char c){
+  35   1              return(putC_LCD(c));
+  36   1      }
+  37          
+  38          //-----------------------------------------------------------------------------
+  39          
+  40          //-----------------------------------------------------------------------------
+  41          // main() Routine
+  42          // ----------------------------------------------------------------------------
+  43          int main (void){
+  44   1              if((RSTSRC&0x02)==0x00){
+  45   2                      if((RSTSRC&0x08)==0x08)
+  46   2                         NOP();
+  47   2              }
+  48   1              // Call hardware initialization routine
+  49   1              enter_DefaultMode_from_RESET();
+  50   1              PCA0CPH5=0;
+C51 COMPILER V9.53.0.0   TP4_MAIN                                                          03/25/2019 15:35:28 PAGE 2   
+
+  51   1      
+  52   1              IE_EA=1;
+  53   1      
+  54   1              while (1) 
+  55   1         {
+  56   2              while(new_task==0);
+  57   2              new_task=0;
+  58   2              scheduler();
+  59   2         }
+  60   1      }
+  61          
+  62          void scheduler(void){
+  63   1      
+  64   1      
+  65   1          uint8_t key;
+  66   1          static uint8_t key_memoire = 0, etat_key = 0;  //
+  67   1      
+  68   1          static bit flag_affi_init,flag_affi_1,flag_affi_2, flag_allume, flag_init;
+  69   1      
+  70   1      
+  71   1      
+  72   1              PCA0CPH5=0;                                 //
+  73   1              switch(scheduler_ct) {
+  74   2                  case 0: {
+  75   3                      //TEST=!TEST;                       // pour mesurer sur oscilloscope
+  76   3                      key = getchar();                    // fonction getchar()
+  77   3                      //TEST=!TEST;                       // pour mesurer sur oscilloscope
+  78   3                      //NOP();
+  79   3                      if(key==0 && etat_key!=0){
+  80   4                              key_memoire=etat_key;
+  81   4                          etat_key=0;
+  82   4                      }else if(key!=0){
+  83   4                              etat_key=key;
+  84   4                      }
+  85   3                      if(key_memoire != 0){
+  86   4                              //TEST=!TEST;
+  87   4      
+  88   4                              if(key_memoire=='*'){
+  89   5                                  key_memoire=0;
+  90   5                                  flag_affi_1=1;
+  91   5                              }
+  92   4                              if(key_memoire=='#'){
+  93   5      
+  94   5                                      key_memoire=0;
+  95   5                                      flag_affi_2=1;
+  96   5      
+  97   5                              }
+  98   4      
+  99   4                              key_memoire = 0;
+ 100   4                              //NOP();
+ 101   4                      }
+ 102   3                      break;
+ 103   3                  }
+ 104   2      
+ 105   2                  case 1:{
+ 106   3                              if(!flag_allume){
+ 107   4                                      poweron_LCD();
+ 108   4                                      flag_allume = 1;
+ 109   4                              }else if(!flag_init) {
+ 110   4                                      init_LCD();
+ 111   4                                      flag_init = 1;
+ 112   4                              }
+ 113   3      
+C51 COMPILER V9.53.0.0   TP4_MAIN                                                          03/25/2019 15:35:28 PAGE 3   
+
+ 114   3                      else {
+ 115   4                              if(flag_affi_1 == 1){                               //affichage de message
+ 116   5                                      flag_affi_1 = 0;
+ 117   5      
+ 118   5                                      //putchar('0');
+ 119   5                                      TEST=!TEST;
+ 120   5                                      printf("\r0123456789ABCDEF");
+ 121   5                                      printf("\n0123456789ABCDEF");
+ 122   5                                      TEST=!TEST;
+ 123   5                              }
+ 124   4                              if(flag_affi_2 == 1){                               //affichage de message
+ 125   5                                      flag_affi_2 = 0;
+ 126   5                                      clrscr_LCD();
+ 127   5                        }
+ 128   4                      }
+ 129   3                      break;
+ 130   3                  }
+ 131   2      
+ 132   2                      case 7: {
+ 133   3                              /*
+ 134   3                              nb_appels++;                        // incremente nb_appels a chaque fois de case 7
+ 135   3                              if(nb_appels==50){
+ 136   3                                      for(i=0;i<100;i++) delay(120);  //fonction delay pour 1 microseconde, pour 12 ms = 100*120 us
+ 137   3                              }*/
+ 138   3                              break;
+ 139   3                      }
+ 140   2      
+ 141   2              }
+ 142   1              scheduler_ct++;
+ 143   1              if(scheduler_ct==10) scheduler_ct=0;
+ 144   1      
+ 145   1      }
+*** WARNING C280 IN LINE 68 OF \\calebasse\21609785\Bureau\TP Micro S2\MCU8bits_RepEtudiants\HO_TASEVSKI\TP4\src\TP4_mai
+             -n.c: 'flag_affi_init': unreferenced local variable
+ 146          
+ 147          INTERRUPT(TIMER3_ISR,TIMER3_IRQn) {                     // Timer 3 base de temps de 10ms
+ 148   1              TMR3CN&=~0x80;
+ 149   1              new_task=1;
+ 150   1              //TEST=!TEST;
+ 151   1      }
+ 152          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    176    ----
+   CONSTANT SIZE    =     36    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      5    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ASCII"?>
+<device:XMLDevice xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:device="http://www.silabs.com/sls/hc/document/device.ecore" name="C8051F930-G-GQ-LQFP" partId="com.silabs.mcu.si8051.c8051f930_g.c8051f930" version="2.2.2">
+  <mode name="DefaultMode">
+    <property object="CLOCK_0" propertyId="ABPeripheral.included" value="true"/>
+    <property object="CLOCK_0" propertyId="clock.clockselect.clocksourcedivider" value="SYSCLK / 2"/>
+    <property object="CLOCK_0" propertyId="clock.clockselect.sysclk" value="10000000"/>
+    <property object="DefaultMode" propertyId="mode.diagramLocation" value="100, 100"/>
+    <property object="INTERRUPT_0" propertyId="ABPeripheral.included" value="true"/>
+    <property object="INTERRUPT_0" propertyId="interrupt.extendedinterruptenable1.enabletimer3interrupt" value="Enabled"/>
+    <property object="INTERRUPT_0" propertyId="interrupt.interruptenable.enableallinterrupts" value="Enabled"/>
+    <property object="P1.0" propertyId="ports.settings.iomode" value="Digital Push-Pull Output"/>
+    <property object="P1.0" propertyId="ports.settings.outputmode" value="Push-pull"/>
+    <property object="PBCFG_0" propertyId="pbcfg.settings.enablecrossbar" value="Enabled"/>
+    <property object="PCA_0" propertyId="ABPeripheral.included" value="true"/>
+    <property object="PCA_0" propertyId="pca.pcachannel5.capturecompareregister" value="34"/>
+    <property object="PCA_0" propertyId="pca.pcachannel5.enablematchfunction" value="Enabled"/>
+    <property object="PCA_0" propertyId="pca.pcachannel5capturecomparemode.enablechannel5comparatorfunction" value="Enabled"/>
+    <property object="PCA_0" propertyId="pca.pcachannel5capturemodulelowbyte.pcachannel5capturemodulelowbyte" value="34"/>
+    <property object="PCA_0" propertyId="pca.pcacontrol.channel5capturecomparemode" value="Software Timer"/>
+    <property object="PCA_0" propertyId="pca.pcacontrol.pcacountertimerruncontrol" value="Start"/>
+    <property object="PCA_0" propertyId="pca.pcacountertimerconfiguration.pcaclockfrequency" value="833.333 kHz"/>
+    <property object="PCA_0" propertyId="pca.pcacountertimerconfiguration.pcaclockfrequencyintegervalue" value="833333.333333"/>
+    <property object="PCA_0" propertyId="pca.pcacountertimerconfiguration.pcaclockperiod" value="1.200 us"/>
+    <property object="PCA_0" propertyId="pca.watchdogcontrol.enablewatchdogtimer" value="Disabled"/>
+    <property object="PCA_0" propertyId="pca.watchdogtimer.actualtimeoutinterval" value="10.752 ms"/>
+    <property object="PCA_0" propertyId="pca.watchdogtimer.expectedtimeoutintervalms" value="11"/>
+    <property object="TIMER16_3" propertyId="ABPeripheral.included" value="true"/>
+    <property object="TIMER16_3" propertyId="timer16.control.clocksourcefrequency" value="833.333 kHz"/>
+    <property object="TIMER16_3" propertyId="timer16.control.clocksourcefrequencyvalue" value="833333"/>
+    <property object="TIMER16_3" propertyId="timer16.control.clocksourceperiod" value="1.200 us"/>
+    <property object="TIMER16_3" propertyId="timer16.control.runcontrol" value="Start"/>
+    <property object="TIMER16_3" propertyId="timer16.control.timerrunningstate" value="Timer is Running"/>
+    <property object="TIMER16_3" propertyId="timer16.highbyte.highbyte" value="223"/>
+    <property object="TIMER16_3" propertyId="timer16.initandreloadvalue.targetoverflowfrequency" value="100"/>
+    <property object="TIMER16_3" propertyId="timer16.initandreloadvalue.timerinitoverflowafter" value="10.001 ms"/>
+    <property object="TIMER16_3" propertyId="timer16.initandreloadvalue.timerinitvalue" value="57202"/>
+    <property object="TIMER16_3" propertyId="timer16.initandreloadvalue.timerreloadoverflowfrequency" value="100.004 Hz"/>
+    <property object="TIMER16_3" propertyId="timer16.initandreloadvalue.timerreloadoverflowfrequencylowbyte" value="5.910 kHz"/>
+    <property object="TIMER16_3" propertyId="timer16.initandreloadvalue.timerreloadoverflowperiod" value="10.000 ms"/>
+    <property object="TIMER16_3" propertyId="timer16.initandreloadvalue.timerreloadoverflowperiodlowbyte" value="169.200 us"/>
+    <property object="TIMER16_3" propertyId="timer16.initandreloadvalue.timerreloadvalue" value="57203"/>
+    <property object="TIMER16_3" propertyId="timer16.lowbyte.lowbyte" value="114"/>
+    <property object="TIMER16_3" propertyId="timer16.reloadhighbyte.reloadhighbyte" value="223"/>
+    <property object="TIMER16_3" propertyId="timer16.reloadlowbyte.reloadlowbyte" value="115"/>
+    <property object="TIMER16_3" propertyId="timer16.timeroverflowforperipherialsclocksource.adc0conversionstartsignal" value="100.004 Hz"/>
+    <property object="TIMER16_3" propertyId="timer16.timeroverflowforperipherialsclocksource.smbus0sckfrequency" value="33.335 Hz"/>
+    <property object="TIMER16_3" propertyId="timer16.timeroverflowforperipherialsclocksource.smbus0scllowtimeout" value="10.000 ms"/>
+    <property object="TIMER_SETUP_0" propertyId="timer_setup.timer0.clockfrequency" value="833.333 kHz"/>
+    <property object="TIMER_SETUP_0" propertyId="timer_setup.timer1.clockfrequency" value="833.333 kHz"/>
+  </mode>
+  <modeTransition>
+    <property object="RESET &#x2192; DefaultMode" propertyId="modeTransition.target" value="DefaultMode"/>
+    <property object="RESET &#x2192; DefaultMode" propertyId="modeTransition.source" value="RESET"/>
+  </modeTransition>
+</device:XMLDevice>

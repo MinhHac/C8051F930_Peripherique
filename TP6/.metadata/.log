@@ -1,0 +1,9 @@
+!SESSION 2019-03-25 12:38:58.933 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.6.0_32
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=fr_FR
+Command-line arguments:  -os win32 -ws win32 -arch x86 -data \\calebasse\21609785\Bureau\TP Micro S2\MCU8bits_RepEtudiants\HO_TASEVSKI\TP4
+
+!ENTRY com.silabs.ide.tcf.agent 1 0 2019-03-25 12:39:06.526
+!MESSAGE Launching SiAgent (C:\SiliconLabs\SimplicityStudio\v3\common\tcf\siagent.exe)
