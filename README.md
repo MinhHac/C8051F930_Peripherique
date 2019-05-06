@@ -1,27 +1,33 @@
 # C8051F930_Peripherique_1
 
- * L’objectif est de piloter un moteur pas à pas possédant quatre phases, commandées par quatre broches du microcontrôleur. Entre le moteur et le microcontrôleur un étage de puissance est intercalé afin de délivrer le courant nécessaire dans les inducteurs. Les signaux de commande des phases en sorties du MCU doivent varier périodiquement (période T = 2.4ms).
+* Microcontrôleur: C8051F930
 
-* Logiciels utilisés : Keil C, Proteus, Simplicity.
+* Langage utilisé: C, Assembleur
 
-* Langage utilisés:  C
+* Logiciel utilisé: Simplicity
 
-* Résumé
- Etape 1 : Gestionnaire de tâche et timer 0.
-Programmer un ordonnanceur comportant 4 tâches synchronisées par le timer 0. L’ordonnanceur devra exécuter une nouvelle tâche toutes les 9ms, ce qui signifie que la tâche numéro x sera exécutée toutes les 36ms. 
+* Résumé des principaux objectifs :
+1. Ordonnanceur et Scheduler 
+•	Le programme du Microcontrôleur est scindé des tâches (processus/ threads) et l'ordonnanceur pilote l'exécution de chacune des tâches.
+•	Réaliser par un Timer qui sert de base de temps pour une interruption basse priorité.
 
- Etape 2 : Librairie « Moteur »
-Le timer 2 est utilisé comme base de temps pour modifier les phases du moteur toutes les 600μs. Les
-broches P1.4, P1.5, P1.6 et P1.7 sont utilisées par ailleurs en sortie. Ecrire une librairie qui contient :
-               • une fonction d’initialisation du moteur qui configure le timer 2.
-               • l’ISR du timer 2 qui modifie les broches P1.0 , P1.1, P1.2 et P1.3.
-               • une fonction d’arrêt et de démarrage du moteur.
+2. Watchdog-Sécurité : En fonctionnement normal le comptage du Watchdog est régulièrement relancé à partir de sa valeur initiale.
 
-   Etape 3 : Utilisation de la librairie dans l’ordonnanceur.
-Compléter l'ordonnanceur pour que la tâche 1 initialise le moteur (c’est-à-dire le timer 2) au
-démarrage du microcontrôleur. Cette même tâche devra examiner l’état d’un bouton poussoir connecté sur la broche P0.2. L’activation du bouton poussoir devra démarrer le moteur s’il est à l’arrêt ou le stopper si le moteur est en rotation.
+3. Communication avec le Clavier
+•	Scrutation d'un périphérique (Clavier) dans l'ordonnanceur.
+•	Scinder des tâches pour des raisons fonctionnelles et temporelles.
+•	Créer une tâche de lecture d'un périphérique qui elle-même déclenchera des actions dans autres tâches.
 
-   Etape 4 : Pilotage de la vitesse du moteur à partir d’un terminal série.
-Un terminal de communication est connecté au microcontrôleur par la liaison série via le module UART0. Dans cette application le terminal permettra à un opérateur de transmettre un octet dont la valeur en décimal, notée x modifiera la vitesse de rotation du moteur. T/4 devra correspondre à x*100 μs
+4. Communication avec le LCD 16x2
+•	Scrutation d'un périphérique (LCD) dans l'ordonnanceur.
+•	Scinder des tâches pour des raisons fonctionnelles et temporelles.
+•	Créer une tâche de lecture d'un périphérique qui elle-même déclenchera des actions dans autres tâches.
 
-  
+5. Communication avec Ibutton
+•	Scrutation d'un périphérique (Ibutton) dans l'ordonnanceur.
+•	Scinder des tâches pour des raisons fonctionnelles et temporelles.
+•	Créer une tâche de lecture d'un périphérique qui elle-même déclenchera des actions dans autres tâches.
+
+6. Communication avec des périphériques externes par la liaison UART 
+•	Protocole de lecture de l'identifiant unique de 8 octets.
+•	Protocole de lecture/ écriture sur l'I/O du 1 -Wire bus.
