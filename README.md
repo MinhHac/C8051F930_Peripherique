@@ -1,4 +1,4 @@
-# C8051F930_Peripherique_1
+# C8051F930_Peripherique
 
 * Microcontrôleur: C8051F930
 
